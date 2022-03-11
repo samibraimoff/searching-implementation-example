@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Table = ({ users }) => {
+const Table = ({ data }) => {
+  console.log(data);
   return (
     <table className='table'>
       <thead>
@@ -11,14 +12,13 @@ const Table = ({ users }) => {
         </tr>
       </thead>
       <tbody>
-        {users.length > 0 &&
-          users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.first_name}</td>
-              <td>{user.last_name}</td>
-              <td>{user.email}</td>
-            </tr>
-          ))}
+        {data.map((user) => (
+          <tr key={user.id}>
+            <td>{user.first_name}</td>
+            <td>{user.last_name}</td>
+            <td>{user.email}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );

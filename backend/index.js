@@ -1,11 +1,13 @@
 const express = require('express');
 const cors = require('cors');
-const Users = require('./users');
+const { Users } = require('./users');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json({ extended: true }));
+
+console.log(Users);
 
 app.get('/', (req, res) => {
   const { query } = req.query;
@@ -18,7 +20,7 @@ app.get('/', (req, res) => {
     );
   };
 
-  query ? res.json(search(Users)) : res.json(Users);
+  query ? res.json(search(Users).slice(0, 10)) : res.json(Users.slice(0, 10));
 });
 
 app.listen(3030, () => {

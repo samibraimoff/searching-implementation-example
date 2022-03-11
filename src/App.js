@@ -12,12 +12,16 @@ const App = () => {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    const response = await axios.get(`http://localhost:3030?query=${query}`);
-    setData(response.data.Users);
+    try {
+      const response = await axios.get(`http://localhost:3030?query=${query}`);
+      setData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    fetchData();
+    if (query.length === 0 || query.length > 2) fetchData();
   }, [query]);
 
   return (
@@ -30,7 +34,7 @@ const App = () => {
         value={query}
       />
       {/* <UserList query={query} setQuery={setQuery} /> */}
-      <Table users={data} />
+      <Table data={data} />
     </div>
   );
 };

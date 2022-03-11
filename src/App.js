@@ -1,20 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import './App.css';
 import Table from './components/table/Table';
-import UserList from './components/users/UserList';
+// import UserList from './components/users/UserList';
 
-import { Users } from './users';
+// import { Users } from './users';
 
 const App = () => {
   const [query, setQuery] = useState('');
+  const [data, setData] = useState([]);
 
-  const keys = ['first_name', 'last_name', 'email'];
-
-  const search = (data) => {
-    return data.filter((user) =>
-      keys.some((key) => user[key].toLowerCase().includes(query))
-    );
+  const fetchData = async () => {
+    const response = await axios.get(`http://localhost:3030?query=${query}`);
+    setData(response.data.Users);
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [query]);
 
   return (
     <div className='app'>
@@ -26,7 +30,7 @@ const App = () => {
         value={query}
       />
       {/* <UserList query={query} setQuery={setQuery} /> */}
-      <Table users={search(Users)} />
+      <Table users={data} />
     </div>
   );
 };
